@@ -1,0 +1,5 @@
+/* everything */
+* {
+  box-sizing: border-box;
+  /* width contains the border, the contain contains the border */
+}

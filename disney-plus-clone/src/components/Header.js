@@ -31,9 +31,7 @@ function Header() {
           <span>SERIES</span>
         </a>
       </NavMenu>
-      <UserImg src="https://media-exp1.licdn.com/dms/image/C5603AQEHdllhju7uxA/profile-displayphoto-shrink_800_800/0/1606360341588?e=1626307200&v=beta&t=ZLL6gb_Whskz9kXPPQBXVGp6e2_zeA_1RoOD1mwLfYY">
-
-      </UserImg>
+      <UserImg src="https://media-exp1.licdn.com/dms/image/C5603AQEHdllhju7uxA/profile-displayphoto-shrink_800_800/0/1606360341588?e=1626307200&v=beta&t=ZLL6gb_Whskz9kXPPQBXVGp6e2_zeA_1RoOD1mwLfYY"></UserImg>
     </Nav>
   );
 }
@@ -46,6 +44,7 @@ const Nav = styled.nav`
   display: flex;
   align-items: center;
   padding: 0 36px;
+  overflow-x: hidden;
 `;
 
 const Logo = styled.img`
@@ -58,24 +57,24 @@ const NavMenu = styled.div`
   margin-left: 25px;
   align-items: center;
 
-  a{
+  a {
     display: flex;
     align-items: center;
     padding: 0 12px;
     /* add 12px to left and right only, 0 to top/bottom */
     cursor: pointer;
     /* you can target img tag within the a tag */
-    img{
+    img {
       height: 20px;
     }
 
-    span{
+    span {
       font-size: 13px;
       /* space between letters */
       letter-spacing: 1.42px;
       position: relative;
 
-      &:after{
+      &:after {
         content: "";
         height: 2px;
         background: white;
@@ -90,14 +89,12 @@ const NavMenu = styled.div`
       }
     }
 
-    &:hover{
-      span:after{
+    &:hover {
+      span:after {
         transform: scaleX(1);
         opacity: 1;
       }
     }
-
-
   }
 `;
 
@@ -106,5 +103,4 @@ const UserImg = styled.img`
   height: 48px;
   border-radius: 50%;
   cursor: pointer;
-
 `;

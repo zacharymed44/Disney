@@ -1,11 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import Carousel from "../components/ImgCarousel";
+import Viewers from "../components/Viewers";
 
 function Home() {
   return (
     <Container>
       <Carousel />
+      <Viewers />
     </Container>
   );
 }

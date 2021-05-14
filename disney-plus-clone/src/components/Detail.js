@@ -1,16 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useParams } from "react-router-dom";
+import db from "../firebase";
+
 
 function Detail() {
+  const { id } = useParams();
+  const [movie, setMovie] = useState()
+
+  useEffect(() => {
+    //grab movie info from db
+    db.collection("movies")
+    .doc(id)
+    .get()
+    .then( (doc) => {
+      if(doc.exists) {
+        //save movie data
+        setMovie(doc.data());
+      } else {
+        //redirect to homepage
+
+      }
+    })
+  }, [id])
+
+  console.log("movie is", movie);
+
   return (
     <Container>
+      {movie &&
 
-        <Background>
-            <img src="" />
+
+        (
+        <><Background>
+            <img src={movie.backgroundImg} />
         </Background>
 
         <ImageTitle>
-            <img src=""/>
+            <img src={movie.titleImg}/>
         </ImageTitle>
 
         <Controls>
@@ -32,14 +59,14 @@ function Detail() {
         </Controls>
 
         <SubTitle>
-          2018 , 7m, Family, Fantasy, Kids, Animation
+          {movie.subTitle}
         </SubTitle>
 
         <Description>
-          Inserting a movie description here to show you that this is where that data will go once we get it from the database using Firebase!
+          {movie.description}
         </Description>
 
-
+        </>)}
     </Container>
   )
 }

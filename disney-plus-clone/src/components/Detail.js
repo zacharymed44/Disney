@@ -1,116 +1,102 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import db from "../firebase";
 
-
 function Detail() {
   const { id } = useParams();
-  const [movie, setMovie] = useState()
+  const [movie, setMovie] = useState();
 
   useEffect(() => {
     //grab movie info from db
     db.collection("movies")
-    .doc(id)
-    .get()
-    .then( (doc) => {
-      if(doc.exists) {
-        //save movie data
-        setMovie(doc.data());
-      } else {
-        //redirect to homepage
-
-      }
-    })
-  }, [id])
+      .doc(id)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          //save movie data
+          setMovie(doc.data());
+        } else {
+          //redirect to homepage
+        }
+      });
+  }, [id]);
 
   console.log("movie is", movie);
 
   return (
     <Container>
-      {movie &&
-
-
-        (
-        <><Background>
+      {movie && (
+        <>
+          <Background>
             <img src={movie.backgroundImg} />
-        </Background>
+          </Background>
 
-        <ImageTitle>
-            <img src={movie.titleImg}/>
-        </ImageTitle>
+          <ImageTitle>
+            <img src={movie.titleImg} />
+          </ImageTitle>
 
-        <Controls>
-          <PlayButton>
-              <img src="/disney-images/play-icon-black.png"/>
+          <Controls>
+            <PlayButton>
+              <img src="/disney-images/play-icon-black.png" />
               <span>PLAY</span>
-          </PlayButton>
-          <TrailerButton>
-              <img src="/disney-images/play-icon-white.png"/>
+            </PlayButton>
+            <TrailerButton>
+              <img src="/disney-images/play-icon-white.png" />
               <span>Trailer</span>
-          </TrailerButton>
-          <AddButton>
+            </TrailerButton>
+            <AddButton>
               <span>+</span>
+            </AddButton>
+            <GroupButton>
+              <img src="/disney-images/group-icon.png" />
+            </GroupButton>
+          </Controls>
 
-          </AddButton>
-          <GroupButton>
-              <img src="/disney-images/group-icon.png"/>
-          </GroupButton>
-        </Controls>
+          <SubTitle>{movie.subTitle}</SubTitle>
 
-        <SubTitle>
-          {movie.subTitle}
-        </SubTitle>
-
-        <Description>
-          {movie.description}
-        </Description>
-
-        </>)}
+          <Description>{movie.description}</Description>
+        </>
+      )}
     </Container>
-  )
+  );
 }
 export default Detail;
 
 const Container = styled.div`
-    min-height: calc(100vh - 70px);
-    padding: 0 calc(3.5vw + 5px);
-    position: relative;
-
+  min-height: calc(100vh - 70px);
+  padding: 0 calc(3.5vw + 5px);
+  position: relative;
 `;
 
 const Background = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    z-index: -1;
-    opacity: 0.8;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+  opacity: 0.8;
 
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const ImageTitle = styled.div`
-    height: 30vh;
-    min-height: 170px;
-    width: 35vw;
-    min-width: 200px;
-    margin-top: 60px;
+  height: 30vh;
+  min-height: 170px;
+  width: 35vw;
+  min-width: 200px;
+  margin-top: 60px;
 
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
-
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 `;
 
 const Controls = styled.div`
@@ -131,7 +117,7 @@ const PlayButton = styled.button`
   letter-spacing: 1.8px;
   cursor: pointer;
 
-  &:hover{
+  &:hover {
     background: rgb(198, 198, 198);
   }
 `;
@@ -155,7 +141,7 @@ const AddButton = styled.button`
   cursor: pointer;
   margin-right: 16px;
 
-  span{
+  span {
     font-size: 30px;
     color: white;
   }
@@ -170,7 +156,6 @@ const SubTitle = styled.div`
   font-size: 15px;
   min-height: 20px;
   margin-top: 26px;
-
 `;
 
 const Description = styled.div`
@@ -180,5 +165,4 @@ const Description = styled.div`
   min-height: 20px;
   margin-top: 16px;
   max-width: 760px;
-
 `;

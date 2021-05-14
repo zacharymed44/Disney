@@ -1,12 +1,12 @@
-import React, {useEffect} from "react";
-import {auth, provider} from "../firebase";
+import React, { useEffect } from "react";
+import { auth, provider } from "../firebase";
 import styled from "styled-components";
 import { useHistory, Link } from "react-router-dom";
 import {
   selectUserName,
   selectUserPhoto,
   setUserLogin,
-  setSignout
+  setSignout,
 } from "../features/user/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -16,81 +16,75 @@ function Header() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-
   //how to keep state up when refreshing
-  useEffect( ()=> {
-    auth.onAuthStateChanged(async (user)=> {
-      if(user) {
-        dispatch(setUserLogin({
-        name: user.displayName,
-        email: user.email,
-        photo: user.photoURL
-      }))
-      history.push("/")
+  useEffect(() => {
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        dispatch(
+          setUserLogin({
+            name: user.displayName,
+            email: user.email,
+            photo: user.photoURL,
+          })
+        );
+        history.push("/");
       }
-    })
-  }, [])
+    });
+  }, []);
 
   const signIn = () => {
-    auth.signInWithPopup(provider)
-    .then((result) => {
+    auth.signInWithPopup(provider).then((result) => {
       let user = result.user;
 
-      history.push("/")
-    })
-  }
+      history.push("/");
+    });
+  };
 
   const signOut = () => {
-    auth.signOut()
-    .then( () => {
+    auth.signOut().then(() => {
       dispatch(setSignout());
       history.push("/login");
-    })
-  }
-
-
+    });
+  };
 
   return (
     <Nav>
       <Logo src="/disney-images/logo.svg" />
       {!userName ? (
         <LoginContainer>
-            <Login onClick={signIn}>LOGIN</Login>
+          <Login onClick={signIn}>LOGIN</Login>
         </LoginContainer>
-        ) :
-        (<>
-
-      <NavMenu>
-              <Link to={"/"}>
-                  <img src="/disney-images/home-icon.svg" />
-                  <span>HOME</span>
-              </Link>
-              <a>
-                <img src="/disney-images/search-icon.svg" />
-                <span>SEARCH</span>
-              </a>
-              <a>
-                <img src="/disney-images/watchlist-icon.svg" />
-                <span>WATCHLIST</span>
-              </a>
-              <a>
-                <img src="/disney-images/original-icon.svg" />
-                <span>ORIGINALS</span>
-              </a>
-              <a>
-                <img src="/disney-images/movie-icon.svg" />
-                <span>MOVIES</span>
-              </a>
-              <a>
-                <img src="/disney-images/series-icon.svg" />
-                <span>SERIES</span>
-              </a>
-            </NavMenu>
-            <UserImg onClick={signOut} src={userPhoto} ></UserImg>
-
-              </>)
-
-      }
+      ) : (
+        <>
+          <NavMenu>
+            <Link to={"/"}>
+              <img src="/disney-images/home-icon.svg" />
+              <span>HOME</span>
+            </Link>
+            <a>
+              <img src="/disney-images/search-icon.svg" />
+              <span>SEARCH</span>
+            </a>
+            <a>
+              <img src="/disney-images/watchlist-icon.svg" />
+              <span>WATCHLIST</span>
+            </a>
+            <a>
+              <img src="/disney-images/original-icon.svg" />
+              <span>ORIGINALS</span>
+            </a>
+            <a>
+              <img src="/disney-images/movie-icon.svg" />
+              <span>MOVIES</span>
+            </a>
+            <a>
+              <img src="/disney-images/series-icon.svg" />
+              <span>SERIES</span>
+            </a>
+          </NavMenu>
+          <UserImg onClick={signOut} src={userPhoto}></UserImg>
+        </>
+      )}
     </Nav>
   );
 }
@@ -174,20 +168,15 @@ const Login = styled.div`
   transition: all 0.2s ease 0s;
   cursor: pointer;
 
-
-
-  &:hover{
+  &:hover {
     background-color: #f9f9f9;
     color: #000;
     border-color: transparent;
-
   }
-
 `;
 
 const LoginContainer = styled.div`
   flex: 1;
   display: flex;
   justify-content: flex-end;
-
 `;
